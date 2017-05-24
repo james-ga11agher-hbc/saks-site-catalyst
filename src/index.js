@@ -2,8 +2,11 @@
 (function (root) {
 
   require('./app-measurement');
+  require('./activity-map');
 
   var app = new AppMeasurement();
+
+  require('./plugins')(app);
 
   app = Object.assign(app, {
     charSet: 'UTF-8',
