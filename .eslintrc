@@ -1,0 +1,13 @@
+{
+  "extends": "shellscape",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "eqeqeq": ["error", "always"],
+    "no-undef": ["error"],
+    "no-unused-vars": ["error"],
+    "object-curly-spacing": ["error", "always", { "arraysInObjects": true }],
+    "prefer-arrow-callback": ["off"]
+  }
+}
