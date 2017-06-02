@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint .",
     "release": "npm run test && webpack && git commit -am \"dist release\" && npm run patch",
-    "patch": "npm version patch"
+    "patch": "npm version patch && git push && git push --tags"
   },
   "author": "Andrew Powell <powella@gilt.com>",
   "license": "MIT",
