@@ -5,8 +5,8 @@
   "main": "entry.js",
   "scripts": {
     "test": "eslint .",
-    "release": "npm run test && webpack && git commit -am \"dist release\" && npm run version",
-    "version": "npm version patch && git push && git push --tags"
+    "release": "npm run test && webpack && git commit -am \"dist release\" && npm run patch",
+    "patch": "npm version patch"
   },
   "author": "Andrew Powell <powella@gilt.com>",
   "license": "MIT",
