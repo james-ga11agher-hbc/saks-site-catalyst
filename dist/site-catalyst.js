@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -278,9 +278,9 @@ function s_pgicq(){var a=window,k=a.s_giq,q,r,n;if(k)for(q=0;q<k.length;q++)r=k[
 module.export = function doPlugins (app) {
 
   var util = __webpack_require__(1)(app),
-    pageLoad = __webpack_require__(10),
-    timeToComplete = __webpack_require__(7),
-    allVars = __webpack_require__(14),
+    pageLoad = __webpack_require__(11),
+    timeToComplete = __webpack_require__(8),
+    allVars = __webpack_require__(15),
 
     evar = util.evar,
     prop = util.prop,
@@ -289,6 +289,7 @@ module.export = function doPlugins (app) {
 
     findProductMethod = '',
     siteCatalystVersion = app.version,
+    isMobile = (pageData.site.is_mobile || '').toString() === 'true',
 
     ppv, // percentPageViewed
     ppvData,
@@ -447,7 +448,7 @@ module.export = function doPlugins (app) {
   }
 
   if (typeof(pageData) !== 'undefined') {
-    siteType = (pageData.site && pageData.site.is_mobile === 'true') ? 'mobile' : 'desktop';
+    siteType = isMobile ? 'mobile' : 'desktop';
     siteTypePageName = 'D="' + siteType + ':"+pageName';
   }
 
@@ -499,7 +500,7 @@ module.export = function doPlugins (app) {
   app.pageLoaded = true;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module)))
 
 /***/ }),
 /* 5 */
@@ -508,6 +509,8 @@ module.export = function doPlugins (app) {
 /* eslint-disable */
 
 module.exports = function (s) {
+
+	var isMobile = (pageData.site.is_mobile || '').toString() === 'true';
 
 	/*
 	 * Clean URL-encoded strings
@@ -694,7 +697,6 @@ module.exports = function (s) {
 	s.setupLinkTracking = function($) {
 		$(function() {
 			// top nav
-			var isMobile = window.pageData && pageData.site && pageData.site.is_mobile && pageData.site.is_mobile == 'true';
 			var cat = '';
 			if (!isMobile) {
 				if (window.pageData && pageData.page) {
@@ -1035,6 +1037,41 @@ module.exports = function (s) {
 /* 6 */
 /***/ (function(module, exports) {
 
+/* eslint one-var: ["off"], eqeqeq: ["off"], no-unused-vars: ["off"] */
+
+// Object.assign polyfill
+if (typeof Object.assign != 'function') {
+  Object.assign = function (target, varArgs) { // .length of function is 2
+    if (target == null) { // TypeError if undefined or null
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var to = Object(target),
+      index,
+      nextSource,
+      nextKey;
+
+    for (index = 1; index < arguments.length; index++) {
+      nextSource = arguments[index];
+
+      if (nextSource != null) { // Skip over if undefined or null
+        for (nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
 module.exports = function(module) {
 	if(!module.webpackPolyfill) {
 		module.deprecate = function() {};
@@ -1060,7 +1097,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1085,7 +1122,7 @@ module.exports = function timeToComplete (app, util) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1190,16 +1227,31 @@ module.exports = function channelCampaign (app, util) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* global AppMeasurement, document, Visitor, window */
 (function (root) {
 
+  __webpack_require__(6);
   __webpack_require__(3);
   __webpack_require__(2);
 
-  var app = new AppMeasurement();
+
+  var dataPresent = !!window.pageData,
+    app = new AppMeasurement();
+
+  // backfill pageData
+  root.pageData = Object.assign({
+    order: {},
+    locator: {},
+    page: {},
+    products: [],
+    product_array: {},
+    site: {},
+    visitor: {},
+    wasPresent: dataPresent
+  }, root.pageData),
 
   __webpack_require__(5)(app);
 
@@ -1237,7 +1289,7 @@ module.exports = function channelCampaign (app, util) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1249,11 +1301,11 @@ module.exports = function pageLoad (app, util) {
     return;
   }
 
-  var channelCampaign = __webpack_require__(8),
+  var channelCampaign = __webpack_require__(9),
     events = __webpack_require__(0),
-    search = __webpack_require__(12),
-    refineProduct = __webpack_require__(11),
-    storeLocator = __webpack_require__(13),
+    search = __webpack_require__(13),
+    refineProduct = __webpack_require__(12),
+    storeLocator = __webpack_require__(14),
     util = __webpack_require__(1)(app),
     cookies = {
       TOP_NAV_CLICK: 'v40',
@@ -1360,7 +1412,7 @@ module.exports = function pageLoad (app, util) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1399,7 +1451,7 @@ module.exports = function refineProduct (app, util) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1444,7 +1496,7 @@ module.exports = function internalSearch (app, util) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1470,7 +1522,7 @@ module.exports = function storeLocator (app, util) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 
