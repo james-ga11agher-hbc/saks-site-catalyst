@@ -1,10 +1,25 @@
 /* global AppMeasurement, document, Visitor, window */
 (function (root) {
 
+  require('./polyfill');
   require('./app-measurement');
   require('./activity-map');
 
-  var app = new AppMeasurement();
+
+  var dataPresent = !!window.pageData,
+    app = new AppMeasurement();
+
+  // backfill pageData
+  root.pageData = Object.assign({
+    order: {},
+    locator: {},
+    page: {},
+    products: [],
+    product_array: {},
+    site: {},
+    visitor: {},
+    wasPresent: dataPresent
+  }, root.pageData),
 
   require('./plugins')(app);
 

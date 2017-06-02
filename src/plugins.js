@@ -2,6 +2,8 @@
 
 module.exports = function (s) {
 
+	var isMobile = (pageData.site.is_mobile || '').toString() === 'true';
+
 	/*
 	 * Clean URL-encoded strings
 	 */
@@ -187,7 +189,6 @@ module.exports = function (s) {
 	s.setupLinkTracking = function($) {
 		$(function() {
 			// top nav
-			var isMobile = window.pageData && pageData.site && pageData.site.is_mobile && pageData.site.is_mobile == 'true';
 			var cat = '';
 			if (!isMobile) {
 				if (window.pageData && pageData.page) {

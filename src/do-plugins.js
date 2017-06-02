@@ -22,6 +22,7 @@ module.export = function doPlugins (app) {
 
     findProductMethod = '',
     siteCatalystVersion = app.version,
+    isMobile = (pageData.site.is_mobile || '').toString() === 'true',
 
     ppv, // percentPageViewed
     ppvData,
@@ -180,7 +181,7 @@ module.export = function doPlugins (app) {
   }
 
   if (typeof(pageData) !== 'undefined') {
-    siteType = (pageData.site && pageData.site.is_mobile === 'true') ? 'mobile' : 'desktop';
+    siteType = isMobile ? 'mobile' : 'desktop';
     siteTypePageName = 'D="' + siteType + ':"+pageName';
   }
 
