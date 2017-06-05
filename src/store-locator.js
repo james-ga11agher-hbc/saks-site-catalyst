@@ -1,3 +1,4 @@
+'use strict';
 
 /*
  * Sets the store locator search criteria value

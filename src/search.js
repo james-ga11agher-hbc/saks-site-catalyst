@@ -1,3 +1,4 @@
+'use strict';
 
 module.exports = function internalSearch (app, util) {
   var events = require('./events'),

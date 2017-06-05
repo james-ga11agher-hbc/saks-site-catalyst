@@ -1,5 +1,6 @@
 /* global AppMeasurement, document, Visitor, window */
 (function (root) {
+  'use strict';
 
   require('./polyfill');
   require('./app-measurement');
@@ -22,6 +23,7 @@
   }, root.pageData),
 
   require('./plugins')(app);
+  require('./link-tracking')(app);
 
   app = Object.assign(app, {
     charSet: 'UTF-8',

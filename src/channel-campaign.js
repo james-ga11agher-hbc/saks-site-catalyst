@@ -1,3 +1,4 @@
+'use strict';
 
 /*
  * Manages setting data for channels and campaigns

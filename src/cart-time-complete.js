@@ -1,3 +1,4 @@
+'use strict';
 
 /*
  * Time to completion from shopping cart open to purchase

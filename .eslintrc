@@ -4,10 +4,13 @@
     "sourceType": "module"
   },
   "rules": {
+    "comma-dangle": ["error", "never"],
+    "comma-style": ["error", "last"],
     "eqeqeq": ["error", "always"],
     "no-undef": ["error"],
     "no-unused-vars": ["error"],
     "object-curly-spacing": ["error", "always", { "arraysInObjects": true }],
-    "prefer-arrow-callback": ["off"]
+    "prefer-arrow-callback": ["off"],
+    "quotes": ["error", "single"]
   }
 }
