@@ -1,14 +1,15 @@
-/* global AppMeasurement, document, Visitor, window */
+/* global document, Visitor, window */
 (function (root) {
   'use strict';
 
   require('./polyfill');
-  require('./app-measurement');
   require('./activity-map');
 
-
-  var dataPresent = !!window.pageData,
+  var AppMeasurement = require('./app-measurement'),
+    dataPresent = !!window.pageData,
     app = new AppMeasurement();
+
+  root.s = app;
 
   // backfill pageData
   root.pageData = Object.assign({
@@ -43,7 +44,7 @@
 
     usePlugins: true,
 
-    visitor: Visitor.getapp('5B7B123F5245ADFC0A490D45@AdobeOrg'),
+    visitor: Visitor.getInstance('5B7B123F5245ADFC0A490D45@AdobeOrg'),
     visitorNamespace: 'saksfifthavenue',
 
     _channelDomain: 'Social Media Organic|facebook.com,flickr.com,twitter.com,/t.co,youtube.com,myspace.com,pinterest.com,foursquare.com,instagram.com>Saks Network|saksfifthavenue.com,off5th.com',
@@ -52,7 +53,5 @@
   });
 
   app.doPlugins = require('./do-plugins');
-
-  root.s = app;
 
 })(window);
