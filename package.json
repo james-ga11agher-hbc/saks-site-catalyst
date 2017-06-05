@@ -1,6 +1,6 @@
 {
   "name": "saks-signal",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A library contianing code for Saks' Site Catalyst implementation",
   "main": "entry.js",
   "scripts": {
