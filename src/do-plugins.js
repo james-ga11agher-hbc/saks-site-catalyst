@@ -8,7 +8,7 @@
  * for every tracking call.
  */
 
-module.export = function doPlugins (app) {
+module.exports = function doPlugins (app) {
 
   return function () {
     var util = require('./util')(app),
