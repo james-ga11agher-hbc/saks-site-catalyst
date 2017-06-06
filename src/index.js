@@ -52,6 +52,6 @@
     _channelPattern: 'Email|EML,SalesfloorEML>Affiliates|AFF>Banner Click|MED,DFA>AOL|AOL>eBilling|EBILL>Brand Links|VEND>Social Media|FCBK,TWEET,SOC_>Shopping Comparison|CSE,SD001,BZR002,PGR002,NEX002,YAH301,YAH300,LIKE01,BZR001,SDF001,PGR001,SHOP002,GIFTS01,SHOP001,AMZN001,PRONTO01,SMART001,GGLBASE001,MSNLIVE001,SORTPRICE01,MSNSHOP001,360IFROOGLE,GGLPRADS001>Search|360i,360I>Partnerships|PAR>SMS|SMS>Natural Search|BLMR'
   });
 
-  app.doPlugins = require('./do-plugins');
+  app.doPlugins = require('./do-plugins')(app);
 
 })(window);
