@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1313,7 +1313,7 @@ module.exports = AppMeasurement;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* global pageData */
+/* global pageData */
 
 
 /*
@@ -1323,13 +1323,13 @@ module.exports = AppMeasurement;
  * for every tracking call.
  */
 
-module.export = function doPlugins (app) {
+module.exports = function doPlugins (app) {
 
   return function () {
     var util = __webpack_require__(1)(app),
-      pageLoad = __webpack_require__(12),
-      timeToComplete = __webpack_require__(9),
-      allVars = __webpack_require__(16),
+      pageLoad = __webpack_require__(11),
+      timeToComplete = __webpack_require__(8),
+      allVars = __webpack_require__(15),
 
       evar = util.evar,
       prop = util.prop,
@@ -1550,7 +1550,6 @@ module.export = function doPlugins (app) {
   };
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module)))
 
 /***/ }),
 /* 5 */
@@ -1654,7 +1653,7 @@ module.exports = function (app) {
 
 module.exports = function (app) {
 
-  __webpack_require__(17)(app);
+  __webpack_require__(16)(app);
 
 	/*
 	 * Clean URL-encoded strings
@@ -1980,34 +1979,6 @@ if (typeof Object.assign != 'function') {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2034,7 +2005,7 @@ module.exports = function timeToComplete (app, util) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2141,7 +2112,7 @@ module.exports = function channelCampaign (app, util) {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* global document, Visitor, window */
@@ -2204,7 +2175,7 @@ module.exports = function channelCampaign (app, util) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2216,11 +2187,11 @@ module.exports = function pageLoad (app, util) {
     return;
   }
 
-  var channelCampaign = __webpack_require__(10),
+  var channelCampaign = __webpack_require__(9),
     events = __webpack_require__(0),
-    search = __webpack_require__(14),
-    refineProduct = __webpack_require__(13),
-    storeLocator = __webpack_require__(15),
+    search = __webpack_require__(13),
+    refineProduct = __webpack_require__(12),
+    storeLocator = __webpack_require__(14),
     util = __webpack_require__(1)(app),
     cookies = {
       TOP_NAV_CLICK: 'v40',
@@ -2327,7 +2298,7 @@ module.exports = function pageLoad (app, util) {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2366,7 +2337,7 @@ module.exports = function refineProduct (app, util) {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2413,7 +2384,7 @@ module.exports = function internalSearch (app, util) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2441,7 +2412,7 @@ module.exports = function storeLocator (app, util) {
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 
@@ -2481,7 +2452,7 @@ module.exports = [
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /* eslint-disable */
