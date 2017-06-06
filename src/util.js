@@ -26,7 +26,7 @@ module.exports = function (app) {
       util.set(number, value, 'prop');
     },
 
-    cookie: {
+    cookies: {
       get: function (key) {
         return app.c_r(key);
       },

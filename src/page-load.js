@@ -105,7 +105,7 @@ module.exports = function pageLoad (app, util) {
 
   util.cookies.set(cookies.LEFT_NAV_CLICK, '');
 
-  designerNavPath = util.cookie.get(cookies.DESIGNER_NAV_PATH);
+  designerNavPath = util.cookies.get(cookies.DESIGNER_NAV_PATH);
   util.cookies.set(cookies.DESIGNER_NAV_PATH, '');
 
   if (cseProductId) {
