@@ -1348,7 +1348,7 @@ module.exports = function doPlugins (app) {
     // evar definitions
     sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
-    searchTerm = app.eVar21,
+    searchTerm,
     searchResultCount = app.eVar24,
     topNavRealEstate = app.eVar40,
     leftNavRealEstate = app.eVar74,
@@ -1410,13 +1410,13 @@ module.exports = function doPlugins (app) {
 
   prevPageProp  = app.getPreviousValue(app.pageName, 'c38', '');
 
-  if (prevPageProp ) {
+  if (prevPageProp) {
     ppvData = app.getPercentPageViewed(app.pageName);
 
     if (ppvData && ppvData.length > 1 && ppvData[1] && ppvData[2]) {
       ppv = ppvData[1] + '|' + ppvData[2];
     }
-    else if (prevPageProp  !== app.pageName && pageTypeProp  !== 'quick look') {
+    else if (prevPageProp !== app.pageName && pageTypeProp !== 'quick look') {
       ppv = 'No Data Available';
     }
     else {
@@ -1440,6 +1440,9 @@ module.exports = function doPlugins (app) {
   pageLoad(app, util);
   merchPageName(app, util);
 
+  // must be assigned after pageLoad > search executes
+  searchTerm = app.eVar21;
+
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
     trackVar('eVar6');
@@ -1448,7 +1451,7 @@ module.exports = function doPlugins (app) {
     findProductMethod = 'complete the look';
     trackVar('eVar6');
   }
-  else if (sectionRealEstate !== 'non-section real estate') {
+  else if (sectionRealEstate && sectionRealEstate !== 'non-section real estate') {
     findProductMethod = 'section real estate';
     trackVar('eVar6');
   }
@@ -1529,7 +1532,7 @@ module.exports = function doPlugins (app) {
   evar(21, searchTerm);
   evar(22, searchTermCorrected);
   evar(24, searchResultCount);
-  evar(39, sortBy);
+  evar(39, sortBy.toLowerCase());
   evar(44, refinementFields);
   evar(65, orderId);
   evar(70, pageType);
@@ -2049,6 +2052,7 @@ module.exports = function channelCampaign (app, util) {
   }
 
   app.channelManager('site_refer', '', 'cm', '', 'v0', '14', '');
+  channel = app._channel;
 
   if (channel && channel !== 'n/a' && channel.toLowerCase() !== 'typed/bookmarked') {
     channel = channel.toLowerCase();
