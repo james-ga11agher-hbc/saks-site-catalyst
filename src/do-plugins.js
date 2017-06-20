@@ -33,7 +33,7 @@ module.exports = function doPlugins (app) {
     // evar definitions
     sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
-    searchTerm = app.eVar21,
+    searchTerm,
     searchResultCount = app.eVar24,
     topNavRealEstate = app.eVar40,
     leftNavRealEstate = app.eVar74,
@@ -125,6 +125,9 @@ module.exports = function doPlugins (app) {
   pageLoad(app, util);
   merchPageName(app, util);
 
+  // must be assigned after pageLoad > search executes
+  searchTerm = app.eVar21;
+
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
     trackVar('eVar6');
@@ -133,7 +136,7 @@ module.exports = function doPlugins (app) {
     findProductMethod = 'complete the look';
     trackVar('eVar6');
   }
-  else if (sectionRealEstate !== 'non-section real estate') {
+  else if (sectionRealEstate && sectionRealEstate !== 'non-section real estate') {
     findProductMethod = 'section real estate';
     trackVar('eVar6');
   }
