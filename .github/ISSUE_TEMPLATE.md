@@ -22,9 +22,9 @@ You may leave inapplicable fields empty.
 
 ### Please check [x] all that apply
 
-[ ] eVar Value is Incorrect
-[ ] sProp Value is Incorrect
-[ ] event not added to `s.events`
+- [ ] eVar Value is Incorrect  
+- [ ] sProp Value is Incorrect  
+- [ ] event not added to `s.events`
 
 ### Steps to Reproduce
 
