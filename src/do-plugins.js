@@ -95,13 +95,13 @@ module.exports = function doPlugins (app) {
 
   prevPageProp  = app.getPreviousValue(app.pageName, 'c38', '');
 
-  if (prevPageProp ) {
+  if (prevPageProp) {
     ppvData = app.getPercentPageViewed(app.pageName);
 
     if (ppvData && ppvData.length > 1 && ppvData[1] && ppvData[2]) {
       ppv = ppvData[1] + '|' + ppvData[2];
     }
-    else if (prevPageProp  !== app.pageName && pageTypeProp  !== 'quick look') {
+    else if (prevPageProp !== app.pageName && pageTypeProp !== 'quick look') {
       ppv = 'No Data Available';
     }
     else {
