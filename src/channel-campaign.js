@@ -40,6 +40,7 @@ module.exports = function channelCampaign (app, util) {
   }
 
   app.channelManager('site_refer', '', 'cm', '', 'v0', '14', '');
+  channel = app._channel;
 
   if (channel && channel !== 'n/a' && channel.toLowerCase() !== 'typed/bookmarked') {
     channel = channel.toLowerCase();
