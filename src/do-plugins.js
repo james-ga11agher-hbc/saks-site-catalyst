@@ -214,7 +214,7 @@ module.exports = function doPlugins (app) {
   evar(21, searchTerm);
   evar(22, searchTermCorrected);
   evar(24, searchResultCount);
-  evar(39, sortBy);
+  evar(39, sortBy.toLowerCase());
   evar(44, refinementFields);
   evar(65, orderId);
   evar(70, pageType);
