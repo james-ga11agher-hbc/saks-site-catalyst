@@ -80,12 +80,7 @@ module.exports = function doPlugins (app) {
 
   app.events = app.events || '';
 
-  if (pageData.site.is_production === 'true') {
-    visitTime = app.getTimeParting('f', '-5');
-  }
-  else if (pageData.site.is_production === 'false') {
-    visitTime = app.getSaksTime();
-  }
+  visitTime = app.getTimeParting('f', '-5');
 
   evar(8, visitTime);
   prop(33, siteCatalystVersion);
