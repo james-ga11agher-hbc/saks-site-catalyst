@@ -2145,7 +2145,7 @@ module.exports = function channelCampaign (app, util) {
     currencyCode: 'USD',
 
     linkDownloadFileTypes: 'exe,zip,wav,mp3,mov,mpg,avi,wmv,pdf,doc,docx,xls,xlsx,ppt,pptx,swf',
-    linkInternalFilters: 'javascript:,saksfifthavenue.com,saks.com,richrelevance.com,paypal.com,checkout.fiftyone.com,paypalcom' + document.location.hostname,
+    linkInternalFilters: 'javascript:,saksfifthavenue.com,saks.com,richrelevance.com,paypal.com,checkout.fiftyone.com,paypal.com,' + document.location.hostname,
     linkLeaveQueryString: false,
     linkTrackEvents: '',
     linkTrackVars: '',
