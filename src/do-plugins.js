@@ -14,7 +14,7 @@ module.exports = function doPlugins (app) {
     pageLoad = require('./page-load'),
     timeToComplete = require('./cart-time-complete'),
     allVars = require('./vars'),
-
+    optimizelyExperiments = require('./optimizely-experiments'),
     evar = util.evar,
     prop = util.prop,
     addEvent = util.addEvent,
@@ -220,6 +220,7 @@ module.exports = function doPlugins (app) {
   evar(72, prevPage);
   evar(78, signupLocation);
   evar(79, locale);
+  evar(100, optimizelyExperiments());
 
   prop(8, visitTimeProp);
   prop(14, designerNameProp);
