@@ -1326,10 +1326,10 @@ module.exports = AppMeasurement;
 module.exports = function doPlugins (app) {
 
   var util = __webpack_require__(1)(app),
-    pageLoad = __webpack_require__(11),
+    pageLoad = __webpack_require__(12),
     timeToComplete = __webpack_require__(8),
-    allVars = __webpack_require__(15),
-
+    allVars = __webpack_require__(16),
+    optimizelyExperiments = __webpack_require__(11),
     evar = util.evar,
     prop = util.prop,
     addEvent = util.addEvent,
@@ -1535,6 +1535,7 @@ module.exports = function doPlugins (app) {
   evar(72, prevPage);
   evar(78, signupLocation);
   evar(79, locale);
+  evar(100, optimizelyExperiments());
 
   prop(8, visitTimeProp);
   prop(14, designerNameProp);
@@ -1649,7 +1650,7 @@ module.exports = function (app) {
 
 module.exports = function (app) {
 
-  __webpack_require__(16)(app);
+  __webpack_require__(17)(app);
 
 	/*
 	 * Clean URL-encoded strings
@@ -2176,6 +2177,37 @@ module.exports = function channelCampaign (app, util) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* global window */
+
+
+module.exports = function () {
+
+  if (!window.optimizelyClientInstance || !window.optimizelyClientInstance.experiments) {
+    return '';
+  }
+
+  var experiments = window.optimizelyClientInstance.experiments,
+    resultString = '',
+    key,
+    value;
+
+  for (key in experiments) {
+    if (experiments.hasOwnProperty(key)) {
+      value = experiments[key] !== null ? experiments[key] : '';
+      resultString += key + '|' + value + ';';
+    }
+  }
+
+  return resultString;
+
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* global pageData */
 
 
@@ -2186,9 +2218,9 @@ module.exports = function pageLoad (app, util) {
 
   var channelCampaign = __webpack_require__(9),
     events = __webpack_require__(0),
-    search = __webpack_require__(13),
-    refineProduct = __webpack_require__(12),
-    storeLocator = __webpack_require__(14),
+    search = __webpack_require__(14),
+    refineProduct = __webpack_require__(13),
+    storeLocator = __webpack_require__(15),
     util = __webpack_require__(1)(app),
     cookies = {
       TOP_NAV_CLICK: 'v40',
@@ -2295,7 +2327,7 @@ module.exports = function pageLoad (app, util) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2334,7 +2366,7 @@ module.exports = function refineProduct (app, util) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2381,7 +2413,7 @@ module.exports = function internalSearch (app, util) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2409,7 +2441,7 @@ module.exports = function storeLocator (app, util) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 
@@ -2449,7 +2481,7 @@ module.exports = [
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /* eslint-disable */
