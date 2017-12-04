@@ -1338,6 +1338,7 @@ module.exports = function doPlugins (app) {
     findProductMethod = '',
     siteCatalystVersion = app.version,
     isMobile = (pageData.site.is_mobile || '').toString() === 'true',
+    isLoggedIn = (pageData.visitor.logged_in || '').toString() === 'true' ? 'registered' : 'anonymous',
 
     ppv, // percentPageViewed
     ppvData,
@@ -1527,6 +1528,7 @@ module.exports = function doPlugins (app) {
   evar(21, searchTerm);
   evar(22, searchTermCorrected);
   evar(24, searchResultCount);
+  evar(37, isLoggedIn);
   evar(39, sortBy.toLowerCase());
   evar(44, refinementFields);
   evar(65, orderId);
