@@ -2387,6 +2387,7 @@ module.exports = function internalSearch (app, util) {
       if (resultCount === '0') {
         resultCount = 'zero';
         term = 'null:' + app.prop21;
+        util.prop(21, term);
       }
 
       util.addEvent(events.INTERNAL_SEARCH);
