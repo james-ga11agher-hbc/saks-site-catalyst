@@ -147,9 +147,11 @@ module.exports = function doPlugins (app) {
     }
     else if (topNavRealEstate) {
       findProductMethod = 'top navigation';
+      trackVar('eVar6');
     }
     else if (leftNavRealEstate) {
       findProductMethod = 'left navigation';
+      trackVar('eVar6');
     }
   }
 
