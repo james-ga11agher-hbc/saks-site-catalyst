@@ -145,13 +145,11 @@ module.exports = function doPlugins (app) {
     else if (app.purchaseID) {
       findProductMethod = 'unknown at time of purchase';
     }
-    else if (topNavRealEstate) {
+    else if (app.eVar40 || topNavRealEstate) {
       findProductMethod = 'top navigation';
-      trackVar('eVar6');
     }
-    else if (leftNavRealEstate) {
+    else if (app.eVar74 || leftNavRealEstate) {
       findProductMethod = 'left navigation';
-      trackVar('eVar6');
     }
   }
 
