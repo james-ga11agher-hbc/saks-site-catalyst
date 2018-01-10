@@ -28,12 +28,14 @@ module.exports = function doPlugins (app) {
     ppvData,
     siteType,
     visitTime,
-    prevPageProp,
+    prevPageProp;
 
-    // evar definitions
-    sectionRealEstate = app.eVar3,
+  pageLoad(app, util);
+  timeToComplete(app, util);
+  // evar definitions
+  var sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
-    searchTerm,
+    searchTerm = app.eVar21,
     searchResultCount = app.eVar24,
     topNavRealEstate = app.eVar40,
     leftNavRealEstate = app.eVar74,
@@ -62,21 +64,23 @@ module.exports = function doPlugins (app) {
     designerNameProp = app.prop14,
     visitTimeProp = app.prop8;
 
-  function merchPageName () {
+  function merchPageName() {
     var pageName = '',
       orderId = '',
-      merchpageTypeProp  = '';
+      merchpageTypeProp = '';
 
-    if (pageTypeProp  !== 'product detail' && pageTypeProp  !== 'quick look') {
+    if (pageTypeProp !== 'product detail' && pageTypeProp !== 'quick look') {
       pageName = 'D=pageName';
       orderId = 'D=ch';
-      merchpageTypeProp  = 'D=c1';
+      merchpageTypeProp = 'D=c1';
     }
 
     evar(59, pageName);
     evar(69, orderId);
-    evar(88, merchpageTypeProp );
+    evar(88, merchpageTypeProp);
   }
+
+  merchPageName(app, util);
 
   app.events = app.events || '';
 
@@ -104,24 +108,17 @@ module.exports = function doPlugins (app) {
     }
   }
 
-  prop(38, prevPageProp );
+  prop(38, prevPageProp);
   prop(39, ppv);
 
   if (app.events.indexOf('scAdd') > -1 ||
-      app.events.indexOf('scRemove') > -1 ||
-      app.events.indexOf('scView') > -1) {
+    app.events.indexOf('scRemove') > -1 ||
+    app.events.indexOf('scView') > -1) {
     addEvent('scOpen');
     trackVar('events');
 
     app.linkTrackEvents = app.apl(app.linkTrackEvents, 'scOpen', ',', 2);
   }
-
-  timeToComplete(app, util);
-  pageLoad(app, util);
-  merchPageName(app, util);
-
-  // must be assigned after pageLoad > search executes
-  searchTerm = app.eVar21;
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
@@ -145,10 +142,10 @@ module.exports = function doPlugins (app) {
     else if (app.purchaseID) {
       findProductMethod = 'unknown at time of purchase';
     }
-    else if (app.eVar40 || topNavRealEstate) {
+    else if (topNavRealEstate) {
       findProductMethod = 'top navigation';
     }
-    else if (app.eVar74 || leftNavRealEstate) {
+    else if (leftNavRealEstate) {
       findProductMethod = 'left navigation';
     }
   }
