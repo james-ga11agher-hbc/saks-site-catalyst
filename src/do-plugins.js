@@ -31,7 +31,6 @@ module.exports = function doPlugins (app) {
     prevPageProp;
 
   pageLoad(app, util);
-  timeToComplete(app, util);
   // evar definitions
   var sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
@@ -80,8 +79,6 @@ module.exports = function doPlugins (app) {
     evar(88, merchpageTypeProp);
   }
 
-  merchPageName(app, util);
-
   app.events = app.events || '';
 
   visitTime = app.getTimeParting('f', '-5');
@@ -119,6 +116,9 @@ module.exports = function doPlugins (app) {
 
     app.linkTrackEvents = app.apl(app.linkTrackEvents, 'scOpen', ',', 2);
   }
+
+  timeToComplete(app, util);
+  merchPageName(app, util);
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
