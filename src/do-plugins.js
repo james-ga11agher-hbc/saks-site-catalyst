@@ -9,7 +9,6 @@
  */
 
 module.exports = function doPlugins (app) {
-
   var util = require('./util')(app),
     pageLoad = require('./page-load'),
     timeToComplete = require('./cart-time-complete'),
@@ -44,7 +43,7 @@ module.exports = function doPlugins (app) {
     refinementFields = app.eVar44,
     signupLocation = app.eVar78,
     orderId = app.eVar65,
-    pageType  = app.eVar70,
+    pageType = app.eVar70,
     pageName = app.eVar71,
     prevPage = app.eVar72,
     locale = app.eVar79,
@@ -55,7 +54,7 @@ module.exports = function doPlugins (app) {
     // prop definitions
     // we may not need to initialize all of these first, but it's there to be safe.
     siteTypePageName = app.prop42,
-    pageTypeProp  = app.prop1,
+    pageTypeProp = app.prop1,
     localeProp = app.prop59,
     AFF001SiteIdProp = app.prop36,
     pageUrlProp = app.prop50,
@@ -63,7 +62,7 @@ module.exports = function doPlugins (app) {
     designerNameProp = app.prop14,
     visitTimeProp = app.prop8;
 
-  function merchPageName() {
+  function merchPageName () {
     var pageName = '',
       orderId = '',
       merchpageTypeProp = '';
@@ -89,7 +88,7 @@ module.exports = function doPlugins (app) {
   app.expDate = new Date();
   app.expDate.setDate(app.expDate.getDate() - 1);
 
-  prevPageProp  = app.getPreviousValue(app.pageName, 'c38', '');
+  prevPageProp = app.getPreviousValue(app.pageName, 'c38', '');
 
   if (prevPageProp) {
     ppvData = app.getPercentPageViewed(app.pageName);
@@ -175,7 +174,7 @@ module.exports = function doPlugins (app) {
     trackVar('eVar78');
   }
 
-  if (typeof(pageData) !== 'undefined') {
+  if (typeof (pageData) !== 'undefined') {
     siteType = isMobile ? 'mobile' : 'desktop';
     siteTypePageName = 'D="' + siteType + ':"+pageName';
   }
@@ -192,9 +191,9 @@ module.exports = function doPlugins (app) {
   trackVar('eVar72');
 
   orderId = orderId || (app.purchaseID ? 'D=purchaseID' : '');
-  pageType = pageTypeProp  ? 'D=c1' : '';
+  pageType = pageTypeProp ? 'D=c1' : '';
   pageName = 'D=pageName';
-  prevPage = prevPageProp  ? 'D=c38' : '';
+  prevPage = prevPageProp ? 'D=c38' : '';
   locale = localeProp ? 'D=c59' : '';
 
   visitTimeProp = visitTime ? 'D=v8' : '';
@@ -202,7 +201,6 @@ module.exports = function doPlugins (app) {
   productCategory = (merchCategory !== 'non-site navigation') ? 'D=v4' : '';
   AFF001SiteIdProp = AFF001SiteId ? 'D=v47' : '';
   pageUrlProp = 'D=g';
-
   evar(4, merchCategory);
   evar(6, findProductMethod);
   evar(3, sectionRealEstate);
