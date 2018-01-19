@@ -1324,7 +1324,6 @@ module.exports = AppMeasurement;
  */
 
 module.exports = function doPlugins (app) {
-
   var util = __webpack_require__(1)(app),
     pageLoad = __webpack_require__(12),
     timeToComplete = __webpack_require__(8),
@@ -1343,12 +1342,13 @@ module.exports = function doPlugins (app) {
     ppvData,
     siteType,
     visitTime,
-    prevPageProp,
+    prevPageProp;
 
-    // evar definitions
-    sectionRealEstate = app.eVar3,
+  pageLoad(app, util);
+  // evar definitions
+  var sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
-    searchTerm,
+    searchTerm = app.eVar21,
     searchResultCount = app.eVar24,
     topNavRealEstate = app.eVar40,
     leftNavRealEstate = app.eVar74,
@@ -1358,7 +1358,7 @@ module.exports = function doPlugins (app) {
     refinementFields = app.eVar44,
     signupLocation = app.eVar78,
     orderId = app.eVar65,
-    pageType  = app.eVar70,
+    pageType = app.eVar70,
     pageName = app.eVar71,
     prevPage = app.eVar72,
     locale = app.eVar79,
@@ -1369,7 +1369,7 @@ module.exports = function doPlugins (app) {
     // prop definitions
     // we may not need to initialize all of these first, but it's there to be safe.
     siteTypePageName = app.prop42,
-    pageTypeProp  = app.prop1,
+    pageTypeProp = app.prop1,
     localeProp = app.prop59,
     AFF001SiteIdProp = app.prop36,
     pageUrlProp = app.prop50,
@@ -1380,17 +1380,17 @@ module.exports = function doPlugins (app) {
   function merchPageName () {
     var pageName = '',
       orderId = '',
-      merchpageTypeProp  = '';
+      merchpageTypeProp = '';
 
-    if (pageTypeProp  !== 'product detail' && pageTypeProp  !== 'quick look') {
+    if (pageTypeProp !== 'product detail' && pageTypeProp !== 'quick look') {
       pageName = 'D=pageName';
       orderId = 'D=ch';
-      merchpageTypeProp  = 'D=c1';
+      merchpageTypeProp = 'D=c1';
     }
 
     evar(59, pageName);
     evar(69, orderId);
-    evar(88, merchpageTypeProp );
+    evar(88, merchpageTypeProp);
   }
 
   app.events = app.events || '';
@@ -1403,7 +1403,7 @@ module.exports = function doPlugins (app) {
   app.expDate = new Date();
   app.expDate.setDate(app.expDate.getDate() - 1);
 
-  prevPageProp  = app.getPreviousValue(app.pageName, 'c38', '');
+  prevPageProp = app.getPreviousValue(app.pageName, 'c38', '');
 
   if (prevPageProp) {
     ppvData = app.getPercentPageViewed(app.pageName);
@@ -1419,12 +1419,12 @@ module.exports = function doPlugins (app) {
     }
   }
 
-  prop(38, prevPageProp );
+  prop(38, prevPageProp);
   prop(39, ppv);
 
   if (app.events.indexOf('scAdd') > -1 ||
-      app.events.indexOf('scRemove') > -1 ||
-      app.events.indexOf('scView') > -1) {
+    app.events.indexOf('scRemove') > -1 ||
+    app.events.indexOf('scView') > -1) {
     addEvent('scOpen');
     trackVar('events');
 
@@ -1432,11 +1432,7 @@ module.exports = function doPlugins (app) {
   }
 
   timeToComplete(app, util);
-  pageLoad(app, util);
   merchPageName(app, util);
-
-  // must be assigned after pageLoad > search executes
-  searchTerm = app.eVar21;
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
@@ -1493,7 +1489,7 @@ module.exports = function doPlugins (app) {
     trackVar('eVar78');
   }
 
-  if (typeof(pageData) !== 'undefined') {
+  if (typeof (pageData) !== 'undefined') {
     siteType = isMobile ? 'mobile' : 'desktop';
     siteTypePageName = 'D="' + siteType + ':"+pageName';
   }
@@ -1510,9 +1506,9 @@ module.exports = function doPlugins (app) {
   trackVar('eVar72');
 
   orderId = orderId || (app.purchaseID ? 'D=purchaseID' : '');
-  pageType = pageTypeProp  ? 'D=c1' : '';
+  pageType = pageTypeProp ? 'D=c1' : '';
   pageName = 'D=pageName';
-  prevPage = prevPageProp  ? 'D=c38' : '';
+  prevPage = prevPageProp ? 'D=c38' : '';
   locale = localeProp ? 'D=c59' : '';
 
   visitTimeProp = visitTime ? 'D=v8' : '';
@@ -1520,7 +1516,6 @@ module.exports = function doPlugins (app) {
   productCategory = (merchCategory !== 'non-site navigation') ? 'D=v4' : '';
   AFF001SiteIdProp = AFF001SiteId ? 'D=v47' : '';
   pageUrlProp = 'D=g';
-
   evar(4, merchCategory);
   evar(6, findProductMethod);
   evar(3, sectionRealEstate);
@@ -1595,7 +1590,7 @@ module.exports = function (app) {
 
       if (app.checkLink($this.attr('href'))) {
         if (!isMobile) {
-          if ($('.header-nav-menu__list-item').length > 0){
+          if ($('.header-nav-menu__list-item').length > 0) {
             newCategory = $this.parents('li.header-nav-menu__list-item').find('a:first').text().toLowerCase();
           }
           else {
@@ -2047,7 +2042,7 @@ module.exports = function channelCampaign (app, util) {
     }
   }
 
-  app.channelManager('site_refer', '', 'cm', '', 'v0', '14', '');
+  app.channelManager('site_refer', '', '0', '', 'v0', '14', '');
   channel = app._channel;
 
   if (channel && channel !== 'n/a' && channel.toLowerCase() !== 'typed/bookmarked') {
