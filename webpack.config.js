@@ -1,5 +1,4 @@
-
-// var webpack = require('webpack');
+var webpack = require('webpack');
 
 module.exports = {
   context: __dirname,
@@ -9,8 +8,6 @@ module.exports = {
     filename: 'site-catalyst.js'
   },
   plugins: [
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true }),
+    new webpack.optimize.UglifyJsPlugin({ mangle: true, sourcemap: true })
   ]
 };
