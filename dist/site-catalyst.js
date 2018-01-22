@@ -1345,7 +1345,7 @@ module.exports = function doPlugins (app) {
     prevPageProp;
 
   pageLoad(app, util);
-  // evar definitions
+  // evar definitions that need to be initialised after pageLoad
   var sectionRealEstate = app.eVar3,
     marketingChannel = app.eVar36,
     searchTerm = app.eVar21,
