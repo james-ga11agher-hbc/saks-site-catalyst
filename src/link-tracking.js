@@ -40,7 +40,7 @@ module.exports = function (app) {
 
       if (app.checkLink($this.attr('href'))) {
         if (!isMobile) {
-          if ($('.header-nav-menu__list-item').length > 0){
+          if ($('.header-nav-menu__list-item').length > 0) {
             newCategory = $this.parents('li.header-nav-menu__list-item').find('a:first').text().toLowerCase();
           }
           else {
