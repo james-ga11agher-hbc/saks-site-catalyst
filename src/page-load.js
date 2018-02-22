@@ -1,5 +1,36 @@
-/* global pageData */
+/* global pageData window */
 'use strict';
+
+function checkFavorites (app, util) {
+  var favoritesPath = 'favorites:product detail:saksbag';
+  var favoritesVar = 'Favorites Add to Cart';
+  var FAVORITES_CHANNEL = 'v51';
+  if (/my-favorites.jsp/.test(window.location.pathname)) {
+    util.cookies.set(FAVORITES_CHANNEL, 'favorites');
+  }
+
+  var cookieFavoritesChannel = util.cookies.get(FAVORITES_CHANNEL);
+
+  if (!cookieFavoritesChannel) {
+    return;
+  }
+
+  var currentPath = app.channel.length ? cookieFavoritesChannel + ':' + app.channel : cookieFavoritesChannel;
+  // Track the pages we visit after landing on the favorites page
+  // If we have hit all the pages we want, fire the event
+  if (currentPath === favoritesPath) {
+    util.cookies.set(FAVORITES_CHANNEL, '');
+    util.evar(51, favoritesVar);
+  }
+  // If we've landed on a page that is still on the current route, continue
+  else if (favoritesPath.search(currentPath) > -1) {
+    util.cookies.set(FAVORITES_CHANNEL, currentPath);
+  }
+  // If we've hit a page that isn't allowed, clear the path
+  else {
+    util.cookies.set(FAVORITES_CHANNEL, '');
+  }
+}
 
 module.exports = function pageLoad (app, util) {
   if (app.pageLoaded) {
@@ -111,6 +142,8 @@ module.exports = function pageLoad (app, util) {
   if (cseProductId) {
     addEvent(events.CSE_PRODUCT_CLICK);
   }
+
+  checkFavorites(app, util);
 
   prop(57, designerNavPath);
 };
