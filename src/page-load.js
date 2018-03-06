@@ -20,7 +20,7 @@ function checkFavorites (app, util) {
   // Track the pages we visit after landing on the favorites page
   // If we have hit all the pages we want, AND the event add to cart is triggered, fire the event
   if (currentPath === favoritesPath) {
-    if (typeof(pageData) !== 'undefined' && pageData.page.event === 'add_to_cart') { {
+    if (typeof(pageData) !== 'undefined' && pageData.page.event === 'add_to_cart') {
       util.cookies.set(FAVORITES_CHANNEL, '');
       util.evar(51, favoritesVar);
     }
