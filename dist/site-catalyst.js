@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1325,10 +1325,11 @@ module.exports = AppMeasurement;
 
 module.exports = function doPlugins (app) {
   var util = __webpack_require__(1)(app),
-    pageLoad = __webpack_require__(12),
+    pageLoad = __webpack_require__(13),
     timeToComplete = __webpack_require__(8),
-    allVars = __webpack_require__(16),
-    optimizelyExperiments = __webpack_require__(11),
+    trackFavoritesPath = __webpack_require__(10),
+    allVars = __webpack_require__(17),
+    optimizelyExperiments = __webpack_require__(12),
     evar = util.evar,
     prop = util.prop,
     addEvent = util.addEvent,
@@ -1365,6 +1366,7 @@ module.exports = function doPlugins (app) {
     visitTime = app.eVar8,
     designerName = app.eVar14,
     AFF001SiteId = app.eVar47,
+    favoritesVar = app.eVar51,
 
     // prop definitions
     // we may not need to initialize all of these first, but it's there to be safe.
@@ -1433,6 +1435,7 @@ module.exports = function doPlugins (app) {
 
   timeToComplete(app, util);
   merchPageName(app, util);
+  trackFavoritesPath(app, util);
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
@@ -1505,6 +1508,7 @@ module.exports = function doPlugins (app) {
   trackVar('eVar71');
   trackVar('eVar72');
 
+  favoritesVar = 'Favorites Add to Cart';
   orderId = orderId || (app.purchaseID ? 'D=purchaseID' : '');
   pageType = pageTypeProp ? 'D=c1' : '';
   pageName = 'D=pageName';
@@ -1524,6 +1528,7 @@ module.exports = function doPlugins (app) {
   evar(24, searchResultCount);
   evar(39, sortBy.toLowerCase());
   evar(44, refinementFields);
+  evar(51, favoritesVar);
   evar(65, orderId);
   evar(70, pageType);
   evar(71, pageName);
@@ -1645,7 +1650,7 @@ module.exports = function (app) {
 
 module.exports = function (app) {
 
-  __webpack_require__(17)(app);
+  __webpack_require__(18)(app);
 
 	/*
 	 * Clean URL-encoded strings
@@ -2108,6 +2113,28 @@ module.exports = function channelCampaign (app, util) {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+/*
+ * Track path from My Account Fav > PDP > Add To Bag CTA click
+ */
+module.exports = function trackFavoritesPath (app, util) {
+  var FAVORITES_CHANNEL = 'v51';
+  var FAVORITES_PATH = 'favorites:product detail';
+  var cookieFavoritesChannel = util.cookies.get(FAVORITES_CHANNEL);
+
+  // If we have the correct path, AND the event add to cart is triggered, fire evar51
+  if (cookieFavoritesChannel === FAVORITES_PATH && app.events.indexOf('scAdd') > -1) {
+    util.trackVar('eVar51');
+  }
+};
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /* global document, Visitor, window */
 (function (root) {
   'use strict';
@@ -2168,7 +2195,7 @@ module.exports = function channelCampaign (app, util) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2199,16 +2226,15 @@ module.exports = function () {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* global pageData window */
 
 
-function checkFavorites (app, util) {
-  var favoritesPath = 'favorites:product detail:saksbag';
-  var favoritesVar = 'Favorites Add to Cart';
+function setFavoritesCookie (app, util) {
+  var FAVORITES_PATH = 'favorites:product detail';
   var FAVORITES_CHANNEL = 'v51';
   if (/my-favorites.jsp/.test(window.location.pathname)) {
     util.cookies.set(FAVORITES_CHANNEL, 'favorites');
@@ -2222,14 +2248,8 @@ function checkFavorites (app, util) {
 
   var currentPath = app.channel.length ? cookieFavoritesChannel + ':' + app.channel : cookieFavoritesChannel;
 
-  // Track the pages we visit after landing on the favorites page
-  // If we have hit all the pages we want, AND the event add to cart is triggered, fire the event
-  if (currentPath === favoritesPath) {
-    util.cookies.set(FAVORITES_CHANNEL, '');
-    util.evar(51, favoritesVar);
-  }
   // If we've landed on a page that is still on the current route, continue
-  else if (favoritesPath.search(currentPath) > -1) {
+  if (FAVORITES_PATH.search(currentPath) > -1) {
     util.cookies.set(FAVORITES_CHANNEL, currentPath);
   }
   // If we've hit a page that isn't allowed, clear the path
@@ -2245,9 +2265,9 @@ module.exports = function pageLoad (app, util) {
 
   var channelCampaign = __webpack_require__(9),
     events = __webpack_require__(0),
-    search = __webpack_require__(14),
-    refineProduct = __webpack_require__(13),
-    storeLocator = __webpack_require__(15),
+    search = __webpack_require__(15),
+    refineProduct = __webpack_require__(14),
+    storeLocator = __webpack_require__(16),
     util = __webpack_require__(1)(app),
     cookies = {
       TOP_NAV_CLICK: 'v40',
@@ -2349,14 +2369,14 @@ module.exports = function pageLoad (app, util) {
     addEvent(events.CSE_PRODUCT_CLICK);
   }
 
-  checkFavorites(app, util);
+  setFavoritesCookie(app, util);
 
   prop(57, designerNavPath);
 };
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2395,7 +2415,7 @@ module.exports = function refineProduct (app, util) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2443,7 +2463,7 @@ module.exports = function internalSearch (app, util) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2471,7 +2491,7 @@ module.exports = function storeLocator (app, util) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 
@@ -2511,7 +2531,7 @@ module.exports = [
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 /* eslint-disable */

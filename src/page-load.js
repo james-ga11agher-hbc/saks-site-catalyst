@@ -1,9 +1,8 @@
 /* global pageData window */
 'use strict';
 
-function checkFavorites (app, util) {
-  var favoritesPath = 'favorites:product detail:saksbag';
-  var favoritesVar = 'Favorites Add to Cart';
+function setFavoritesCookie (app, util) {
+  var FAVORITES_PATH = 'favorites:product detail';
   var FAVORITES_CHANNEL = 'v51';
   if (/my-favorites.jsp/.test(window.location.pathname)) {
     util.cookies.set(FAVORITES_CHANNEL, 'favorites');
@@ -17,14 +16,8 @@ function checkFavorites (app, util) {
 
   var currentPath = app.channel.length ? cookieFavoritesChannel + ':' + app.channel : cookieFavoritesChannel;
 
-  // Track the pages we visit after landing on the favorites page
-  // If we have hit all the pages we want, AND the event add to cart is triggered, fire the event
-  if (currentPath === favoritesPath) {
-    util.cookies.set(FAVORITES_CHANNEL, '');
-    util.evar(51, favoritesVar);
-  }
   // If we've landed on a page that is still on the current route, continue
-  else if (favoritesPath.search(currentPath) > -1) {
+  if (FAVORITES_PATH.search(currentPath) > -1) {
     util.cookies.set(FAVORITES_CHANNEL, currentPath);
   }
   // If we've hit a page that isn't allowed, clear the path
@@ -144,7 +137,7 @@ module.exports = function pageLoad (app, util) {
     addEvent(events.CSE_PRODUCT_CLICK);
   }
 
-  checkFavorites(app, util);
+  setFavoritesCookie(app, util);
 
   prop(57, designerNavPath);
 };
