@@ -2236,25 +2236,21 @@ module.exports = function () {
 function setFavoritesCookie (app, util) {
   var FAVORITES_PATH = 'favorites:product detail';
   var FAVORITES_CHANNEL = 'v51';
-  if (/my-favorites.jsp/.test(window.location.pathname)) {
-    util.cookies.set(FAVORITES_CHANNEL, 'favorites');
-  }
+  var referrerURL = window.document.referrer;
 
-  var cookieFavoritesChannel = util.cookies.get(FAVORITES_CHANNEL);
-
-  if (!cookieFavoritesChannel) {
-    return;
-  }
-
-  var currentPath = app.channel.length ? cookieFavoritesChannel + ':' + app.channel : cookieFavoritesChannel;
-
-  // If we've landed on a page that is still on the current route, continue
-  if (FAVORITES_PATH.search(currentPath) > -1) {
-    util.cookies.set(FAVORITES_CHANNEL, currentPath);
+  // if on product detail && referrer link is my-favorites.jsp OR account/favorites - set cookie
+  // my-favorites.jsp - fav page logged out
+  // account/favorites - fav page logged in
+  if (app.channel === 'product detail' && (/my-favorites.jsp/.test(referrerURL) || /account\/favorites/.test(referrerURL)) ) {
+    util.cookies.set(FAVORITES_CHANNEL, FAVORITES_PATH);
   }
   // If we've hit a page that isn't allowed, clear the path
-  else {
+  else if (util.cookies.get(FAVORITES_CHANNEL)) {
     util.cookies.set(FAVORITES_CHANNEL, '');
+  }
+  // else do nothing
+  else {
+    return;
   }
 }
 
