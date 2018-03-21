@@ -10,6 +10,7 @@ module.exports = function trackFavoritesPath (app, util) {
 
   // If we have the correct path, AND the event add to cart is triggered, fire evar51
   if (cookieFavoritesChannel === FAVORITES_PATH && app.events.indexOf('scAdd') > -1) {
+    util.evar(51, 'Favorites Add To Cart');
     util.trackVar('eVar51');
   }
 };
