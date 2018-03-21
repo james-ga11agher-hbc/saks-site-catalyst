@@ -51,7 +51,6 @@ module.exports = function doPlugins (app) {
     visitTime = app.eVar8,
     designerName = app.eVar14,
     AFF001SiteId = app.eVar47,
-    favoritesVar = app.eVar51,
 
     // prop definitions
     // we may not need to initialize all of these first, but it's there to be safe.
@@ -193,7 +192,6 @@ module.exports = function doPlugins (app) {
   trackVar('eVar71');
   trackVar('eVar72');
 
-  favoritesVar = 'Favorites Add to Cart';
   orderId = orderId || (app.purchaseID ? 'D=purchaseID' : '');
   pageType = pageTypeProp ? 'D=c1' : '';
   pageName = 'D=pageName';
@@ -213,7 +211,6 @@ module.exports = function doPlugins (app) {
   evar(24, searchResultCount);
   evar(39, sortBy.toLowerCase());
   evar(44, refinementFields);
-  evar(51, favoritesVar);
   evar(65, orderId);
   evar(70, pageType);
   evar(71, pageName);
