@@ -45,5 +45,7 @@ module.exports = {
   BORDERFREE_ORDERS: 'event72',
   FIND_IN_STORE_START: 'event73',
   FIND_IN_STORE_END: 'event74',
-  SHOPRUNNER_EXPRESS: 'event75'
+  SHOPRUNNER_EXPRESS: 'event75',
+  POINTS_REDEEM_AMOUNT: 'event94',
+  POINTS_REDEEM_DOLLAR: 'event95'
 };
