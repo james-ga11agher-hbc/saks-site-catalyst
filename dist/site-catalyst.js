@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1325,11 +1325,10 @@ module.exports = AppMeasurement;
 
 module.exports = function doPlugins (app) {
   var util = __webpack_require__(1)(app),
-    pageLoad = __webpack_require__(13),
+    pageLoad = __webpack_require__(12),
     timeToComplete = __webpack_require__(8),
-    trackFavoritesPath = __webpack_require__(10),
-    allVars = __webpack_require__(17),
-    optimizelyExperiments = __webpack_require__(12),
+    allVars = __webpack_require__(16),
+    optimizelyExperiments = __webpack_require__(11),
     evar = util.evar,
     prop = util.prop,
     addEvent = util.addEvent,
@@ -1434,7 +1433,6 @@ module.exports = function doPlugins (app) {
 
   timeToComplete(app, util);
   merchPageName(app, util);
-  trackFavoritesPath(app, util);
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
@@ -1647,7 +1645,7 @@ module.exports = function (app) {
 
 module.exports = function (app) {
 
-  __webpack_require__(18)(app);
+  __webpack_require__(17)(app);
 
 	/*
 	 * Clean URL-encoded strings
@@ -1855,6 +1853,9 @@ module.exports = function (app) {
         }
         if (event && event.match(/brand name click|size change|color change|video play|size guide|alt image click|add to waitlist|/g) !== null) {
           thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar75=' + event);
+        }
+        if (event && event.match(/add to cart/g) && app.c_r('v51') === 'favorites:product detail') {
+          thisProduct[5] += (thisProduct[5] ? '|' : '') + 'evar51=Favorites Add to Cart';
         }
 
         productString += (productString ? ',' : '') + thisProduct.join(';').replace(/;+$/gi, '');
@@ -2110,29 +2111,6 @@ module.exports = function channelCampaign (app, util) {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-/*
- * Track path from My Account Fav > PDP > Add To Bag CTA click
- */
-module.exports = function trackFavoritesPath (app, util) {
-  var FAVORITES_CHANNEL = 'v51';
-  var FAVORITES_PATH = 'favorites:product detail';
-  var cookieFavoritesChannel = util.cookies.get(FAVORITES_CHANNEL);
-
-  // If we have the correct path, AND the event add to cart is triggered, fire evar51
-  if (cookieFavoritesChannel === FAVORITES_PATH && app.events.indexOf('scAdd') > -1) {
-    util.evar(51, 'Favorites Add To Cart');
-    util.trackVar('eVar51');
-  }
-};
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /* global document, Visitor, window */
 (function (root) {
   'use strict';
@@ -2193,7 +2171,7 @@ module.exports = function trackFavoritesPath (app, util) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2224,7 +2202,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2259,9 +2237,9 @@ module.exports = function pageLoad (app, util) {
 
   var channelCampaign = __webpack_require__(9),
     events = __webpack_require__(0),
-    search = __webpack_require__(15),
-    refineProduct = __webpack_require__(14),
-    storeLocator = __webpack_require__(16),
+    search = __webpack_require__(14),
+    refineProduct = __webpack_require__(13),
+    storeLocator = __webpack_require__(15),
     util = __webpack_require__(1)(app),
     cookies = {
       TOP_NAV_CLICK: 'v40',
@@ -2370,7 +2348,7 @@ module.exports = function pageLoad (app, util) {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2409,7 +2387,7 @@ module.exports = function refineProduct (app, util) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2457,7 +2435,7 @@ module.exports = function internalSearch (app, util) {
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2485,7 +2463,7 @@ module.exports = function storeLocator (app, util) {
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 
@@ -2525,7 +2503,7 @@ module.exports = [
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /* eslint-disable */
