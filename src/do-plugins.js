@@ -12,7 +12,6 @@ module.exports = function doPlugins (app) {
   var util = require('./util')(app),
     pageLoad = require('./page-load'),
     timeToComplete = require('./cart-time-complete'),
-    trackFavoritesPath = require('./favorites-path'),
     allVars = require('./vars'),
     optimizelyExperiments = require('./optimizely-experiments'),
     evar = util.evar,
@@ -119,7 +118,6 @@ module.exports = function doPlugins (app) {
 
   timeToComplete(app, util);
   merchPageName(app, util);
-  trackFavoritesPath(app, util);
 
   if (app.events.match(/event48($|,)/g)) {
     findProductMethod = 'rich relevance';
