@@ -1810,12 +1810,12 @@ module.exports = function (app) {
         }
 
         if (points_redeem_amount) {
-          productString += (productString ? ';' : '') + 'event94=' + (pctTotal * points_redeem_amount);
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event94=' + (pctTotal * points_redeem_amount);
           app.events = app.apl(app.events, 'event94', ',', 2);
         }
 
         if (points_redeem_dollar) {
-          productString += (productString ? ';' : '') + 'event95=' + (pctTotal * points_redeem_dollar).toFixed(2);
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event95=' + (pctTotal * points_redeem_dollar).toFixed(2);
           app.events = app.apl(app.events, 'event95', ',', 2);
         }
 
