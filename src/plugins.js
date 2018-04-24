@@ -227,6 +227,9 @@ module.exports = function (app) {
         if (event && event.match(/brand name click|size change|color change|video play|size guide|alt image click|add to waitlist|/g) !== null) {
           thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar75=' + event);
         }
+        if (event && event.match(/add to cart/g) && app.c_r('v51') === 'favorites:product detail') {
+          thisProduct[5] += (thisProduct[5] ? '|' : '') + 'evar51=Favorites Add to Cart';
+        }
 
         productString += (productString ? ',' : '') + thisProduct.join(';').replace(/;+$/gi, '');
       }
