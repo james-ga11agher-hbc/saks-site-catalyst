@@ -90,7 +90,9 @@ module.exports = function (app) {
       bopus,
       avail,
       sreCode,
-      i;
+      i,
+      points_redeem_amount,
+      points_redeem_dollar;
 
     if (typeof(eventData) !== 'undefined' && products) {
       if (event && event === 'add to cart') {
@@ -107,6 +109,8 @@ module.exports = function (app) {
       if (isConfirmation) {
         shippingTotal = parseFloat(eventData.order.shipping_total);
         discountTotal = parseFloat(eventData.order.order_discount_total);
+        points_redeem_amount = parseInt(eventData.order.points_redeem_amount);
+        points_redeem_dollar = parseFloat(eventData.order.points_redeem_dollar);
 
         for (i = 0; i < products.length; i++) {
           subtotal += (parseFloat(products[i].paid_unit_price || products[i].price) * parseInt(products[i].quantity));
@@ -158,6 +162,16 @@ module.exports = function (app) {
         if (discount) {
           thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event43=' + discount.toFixed(2);
           app.events = app.apl(app.events, 'event43', ',', 2);
+        }
+
+        if (points_redeem_amount) {
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event94=' + (pctTotal * points_redeem_amount);
+          app.events = app.apl(app.events, 'event94', ',', 2);
+        }
+
+        if (points_redeem_dollar) {
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event95=' + (pctTotal * points_redeem_dollar).toFixed(2);
+          app.events = app.apl(app.events, 'event95', ',', 2);
         }
 
         if (isConfirmation && bopus) {
@@ -219,6 +233,7 @@ module.exports = function (app) {
 
         productString += (productString ? ',' : '') + thisProduct.join(';').replace(/;+$/gi, '');
       }
+
       return productString;
     }
 
