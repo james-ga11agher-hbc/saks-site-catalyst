@@ -32,7 +32,7 @@ module.exports = function (app) {
       }
     }
 
-    selector = isMobile ? 'div.header-nav-hamburger' : 'div.nav, div.header-nav, nav.navigation';
+    selector = isMobile ? 'div.header-nav-hamburger, div.header-nav, nav.navigation' : 'div.nav, div.header-nav, nav.navigation';
 
     $(selector).on('click', 'a', function () {
       var $this = $(this),
