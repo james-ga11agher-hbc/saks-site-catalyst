@@ -1584,7 +1584,7 @@ module.exports = function (app) {
       }
     }
 
-    selector = isMobile ? 'div.header-nav-hamburger' : 'div.nav, div.header-nav';
+    selector = isMobile ? 'div.header-nav-hamburger, div.header-nav, nav.navigation' : 'div.nav, div.header-nav, nav.navigation';
 
     $(selector).on('click', 'a', function () {
       var $this = $(this),
@@ -1592,9 +1592,15 @@ module.exports = function (app) {
 
       if (app.checkLink($this.attr('href'))) {
         if (!isMobile) {
-          if ($('.header-nav-menu__list-item').length > 0) {
+          // New svc-global Header
+          if ($('#ui-header').length > 0) {
+            newCategory = $this.parents('li.category').find('a:first').text().toLowerCase();
+          }
+          // Old AEM Header
+          else if ($('.header-nav-menu__list-item').length > 0) {
             newCategory = $this.parents('li.header-nav-menu__list-item').find('a:first').text().toLowerCase();
           }
+          // Legacy BlueMartini Header
           else {
             newCategory = ($this.closest('.menu-item').attr('id') || '').replace('NavMenu', '').toLowerCase();
           }
