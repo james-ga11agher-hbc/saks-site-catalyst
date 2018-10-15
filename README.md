@@ -27,21 +27,18 @@ must be built manually._
 
 **WARNING! READ ME FIRST!** This process bypasses our normal procedures. Whatever changes you put into STQA or production will go into effect **immediately.** ...So be careful :).
 
-This library is deployed to production and STQA environments via Signal, so access to the [signal hub](https://hub.signal.co/) is required. Signal fetches the code from [rawgit](https://rawgit.com) and injects it onto the page.  
+This library is deployed to production and STQA environments via Signal, so access to the [signal hub](https://hub.signal.co/) is required. Signal fetches the code from [jsdelivr](https://www.jsdelivr.com/?docs=gh) and injects it onto the page.
 
 To deploy, take the following steps:
 
 **STQA**
-* Create a new build file on your branch.
-* Go to [rawgit](https://rawgit.com) and paste in the URL to the build file. Rawgit will generate two URLS, one for production and one for development. Use the development one.
+* Create a new build file on your branch. Make your changes. Then `npm run release` and push your changes. Take note of the new version number.
 * Log into [signal hub](https://hub.signal.co/) and in the left navbar, select "Tags". Select "Adobe Analytics (SiteCatalyst): QA", then select the "Web Settings" tab and then "QA: Saks Site Catalyst CDN."
-* Under the 'Library Hosting' section make sure external is selected and paste in the rawgit URL you generated in step 2.
+* Under the 'Library Hosting' section make sure external is selected and update the URL with your new version number. For example: `https://cdn.jsdelivr.net/gh/saksdirect/saks-site-catalyst@0.1.23/dist/site-catalyst.js`.
 
 **Production**
-* Create a new release.
-* Paste the path to the release build file into rawgit. Select the production URL.
 * Follow step 3 from above, except select Site Catalyst CDN under web settings.
-* Follow step 4 from above.
+* Follow step 4 from above, replacing `.js` with `.min.js`. For example: `https://cdn.jsdelivr.net/gh/saksdirect/saks-site-catalyst@0.1.23/dist/site-catalyst.min.js`.
 
 
 ## Contributing
