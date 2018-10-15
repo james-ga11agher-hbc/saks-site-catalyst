@@ -1594,7 +1594,7 @@ module.exports = function (app) {
         if (!isMobile) {
           // New svc-global Header
           if ($('#ui-header').length > 0) {
-            newCategory = $this.text().toLowerCase();
+            newCategory = $this.parents('li.category').find('a:first').text().toLowerCase();
           }
           // Old AEM Header
           else if ($('.header-nav-menu__list-item').length > 0) {
