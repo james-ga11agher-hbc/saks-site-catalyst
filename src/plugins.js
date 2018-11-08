@@ -60,7 +60,7 @@ module.exports = function (app) {
   app.setProductRefinements = function (arr) {
     var refs = '',
       i;
-      
+
     if (arr) {
       for (i = 0; i < arr.length; i++) {
         if (arr[i].name && arr[i].values && (arr[i].name.indexOf('???') === -1)) {
@@ -92,7 +92,9 @@ module.exports = function (app) {
       sreCode,
       i,
       points_redeem_amount,
-      points_redeem_dollar;
+      points_redeem_dollar,
+      amex_redeem_amount,
+      amex_redeem_dollar;
 
     if (typeof(eventData) !== 'undefined' && products) {
       if (event && event === 'add to cart') {
@@ -111,6 +113,8 @@ module.exports = function (app) {
         discountTotal = parseFloat(eventData.order.order_discount_total);
         points_redeem_amount = parseInt(eventData.order.points_redeem_amount);
         points_redeem_dollar = parseFloat(eventData.order.points_redeem_dollar);
+        amex_redeem_amount = parseInt(eventData.order.amex_redeem_amount);
+        amex_redeem_dollar = parseInt(eventData.order.amex_redeem_dollar);
 
         for (i = 0; i < products.length; i++) {
           subtotal += (parseFloat(products[i].paid_unit_price || products[i].price) * parseInt(products[i].quantity));
@@ -172,6 +176,16 @@ module.exports = function (app) {
         if (points_redeem_dollar) {
           thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event95=' + (pctTotal * points_redeem_dollar).toFixed(2);
           app.events = app.apl(app.events, 'event95', ',', 2);
+        }
+
+        if (amex_redeem_amount) {
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event123=' + amex_redeem_amount;
+          app.events = app.apl(app.events, 'event123', ',', 2);
+        }
+
+        if (amex_redeem_dollar) {
+          thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event124=' + amex_redeem_dollar.toFixed(2);
+          app.events = app.apl(app.events, 'event124', ',', 2);
         }
 
         if (isConfirmation && bopus) {

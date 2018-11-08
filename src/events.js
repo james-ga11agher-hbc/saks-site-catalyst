@@ -47,5 +47,8 @@ module.exports = {
   FIND_IN_STORE_END: 'event74',
   SHOPRUNNER_EXPRESS: 'event75',
   POINTS_REDEEM_AMOUNT: 'event94',
-  POINTS_REDEEM_DOLLAR: 'event95'
+  POINTS_REDEEM_DOLLAR: 'event95',
+  AMEX_POINTS_AVAILABLE: 'event120',
+  CHECK_AMEX_POINTS: 'event121',
+  APPLIED_AMEX_POINTS: 'event122'
 };
