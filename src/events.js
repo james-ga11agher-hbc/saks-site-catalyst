@@ -50,5 +50,7 @@ module.exports = {
   POINTS_REDEEM_DOLLAR: 'event95',
   AMEX_POINTS_AVAILABLE: 'event120',
   CHECK_AMEX_POINTS: 'event121',
-  APPLIED_AMEX_POINTS: 'event122'
+  APPLIED_AMEX_POINTS: 'event122',
+  AMEX_REDEEM_AMOUNT: 'event123',
+  AMEX_REDEEM_DOLLAR: 'event124'
 };
