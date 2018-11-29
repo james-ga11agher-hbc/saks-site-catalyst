@@ -1768,7 +1768,7 @@ module.exports = function (app) {
         points_redeem_amount = parseInt(eventData.order.points_redeem_amount);
         points_redeem_dollar = parseFloat(eventData.order.points_redeem_dollar);
         amex_redeem_amount = parseInt(eventData.order.amex_redeem_amount);
-        amex_redeem_dollar = parseInt(eventData.order.amex_redeem_dollar);
+        amex_redeem_dollar = parseFloat(eventData.order.amex_redeem_dollar);
 
         for (i = 0; i < products.length; i++) {
           subtotal += (parseFloat(products[i].paid_unit_price || products[i].price) * parseInt(products[i].quantity));
@@ -1836,7 +1836,7 @@ module.exports = function (app) {
           thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event123=' + amex_redeem_amount;
           app.events = app.apl(app.events, 'event123', ',', 2);
         }
-        
+
         if (amex_redeem_dollar) {
           thisProduct[4] += (thisProduct[4] ? '|' : '') + 'event124=' + amex_redeem_dollar.toFixed(2);
           app.events = app.apl(app.events, 'event124', ',', 2);
