@@ -114,7 +114,7 @@ module.exports = function (app) {
         points_redeem_amount = parseInt(eventData.order.points_redeem_amount);
         points_redeem_dollar = parseFloat(eventData.order.points_redeem_dollar);
         amex_redeem_amount = parseInt(eventData.order.amex_redeem_amount);
-        amex_redeem_dollar = parseInt(eventData.order.amex_redeem_dollar);
+        amex_redeem_dollar = parseFloat(eventData.order.amex_redeem_dollar);
 
         for (i = 0; i < products.length; i++) {
           subtotal += (parseFloat(products[i].paid_unit_price || products[i].price) * parseInt(products[i].quantity));
