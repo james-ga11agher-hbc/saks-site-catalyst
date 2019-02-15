@@ -1,16 +1,22 @@
-
-// var webpack = require('webpack');
+const webpack = require('webpack');
+const path = require('path');
+const UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+const { version } = require('./package.json');
 
 module.exports = {
-  context: __dirname,
+  mode: 'production',
+  devtool: 'source-map',
   entry: './src/index.js',
   output: {
-    path: __dirname + '/dist',
-    filename: 'site-catalyst.js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: process.env.BUILD_ENV === 'development' 
+      ? 'site-catalyst.[hash].js'
+      : `site-catalyst.${version}.js`
   },
   plugins: [
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: true }),
+    new webpack.ProgressPlugin(),
+    new UnminifiedWebpackPlugin({
+      postfix: 'unmin'
+    })
   ]
 };

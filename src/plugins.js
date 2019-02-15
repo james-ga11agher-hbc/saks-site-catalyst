@@ -6,7 +6,7 @@ module.exports = function (app) {
 
   require('./vendor-plugins')(app);
 
-	/*
+  /*
 	 * Clean URL-encoded strings
 	 */
   app.cleanUrlData = function (url) {
@@ -15,10 +15,10 @@ module.exports = function (app) {
     }
 
     var result = url.replace(/\+/g, ' ')
-                    .replace(/[',"]/g, '')
-                    .replace(/\t/g, '')
-                    .replace(/\n/g, '')
-                    .toLowerCase();
+      .replace(/[',"]/g, '')
+      .replace(/\t/g, '')
+      .replace(/\n/g, '')
+      .toLowerCase();
 
     return result;
   };
@@ -38,7 +38,7 @@ module.exports = function (app) {
     }
   };
 
-	/*
+  /*
 	 * Get the current "fake" product number
    * c_r - cookie read
    * c_w - cookie write
@@ -197,13 +197,13 @@ module.exports = function (app) {
 	                }
 	            }
 
-				// add merchandising eVars here
+        // add merchandising eVars here
         if (products[i].gift_wrap_type) {
 	    			thisProduct[5] = (thisProduct[5] ? '|' : '') + 'evar34=' + products[i].gift_wrap_type;
         }
-	            if (products[i].selected_sku) {
-              thisProduct[5] += (thisProduct[5] ? '|' : '') + 'evar60=' + products[i].selected_sku;
-            }
+	      if (products[i].selected_sku) {
+          thisProduct[5] += (thisProduct[5] ? '|' : '') + 'evar60=' + products[i].selected_sku;
+        }
         if (products[i].availability_dc || products[i].availability_store) {
           avail = !(products[i].availability_dc === '0' && products[i].availability_store === '0') ? 'in stock' : 'out of stock';
           thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar61=' + avail);
@@ -214,11 +214,11 @@ module.exports = function (app) {
         if (products[i].original_price) {
           thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar63=' + products[i].original_price + app.currencyCode);
         }
-	            if (products[i].rr_position_id) {
-	    			thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + products[i].rr_position_id);
-            }
+	      if (products[i].rr_position_id) {
+	    		thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + products[i].rr_position_id);
+        }
         else if (typeof(products[i].sre_code) === 'string' && products[i].sre_code.match(/(^|[A-Z]{0,3})(R|BAG)\d$/)) {
-					//thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + products[i].sre_code);
+			  //thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + products[i].sre_code);
           if (pageData.page.type === 'product detail') {
             thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar25=' + pageData.products[0].id);
           }
@@ -226,7 +226,7 @@ module.exports = function (app) {
         else {
           sreCode = app.Util.getQueryParam('sre');
           if (sreCode && sreCode.match(/(^|\_)[A-Z]{0,3}(R|BAG)\d$/)) {
-						//thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + sreCode.substring(sreCode.lastIndexOf('R')));
+            //thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar38=' + sreCode.substring(sreCode.lastIndexOf('R')));
             if (app.Util.getQueryParam('productCode')) {
               thisProduct[5] += (thisProduct[5] ? '|' : '') + ('evar25=' + app.Util.getQueryParam('productCode'));
             }

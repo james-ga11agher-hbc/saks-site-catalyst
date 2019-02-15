@@ -1,18 +1,17 @@
 {
-  "name": "saks-signal",
+  "name": "saks-site-catalyst",
   "version": "0.1.28",
-  "description": "A library contianing code for Saks' Site Catalyst implementation",
-  "main": "entry.js",
+  "description": "Saks Adobe Analytics - App Measurement and Plugin setup",
   "scripts": {
-    "test": "eslint .",
-    "release": "npm run test && webpack && git commit -am \"dist release\" && npm run patch",
-    "patch": "npm version patch && git push && git push --tags"
+    "lint": "eslint .",
+    "build:dev": "BUILD_ENV=development webpack",
+    "build:prod": "BUILD_ENV=production webpack"
   },
-  "author": "Andrew Powell <powella@gilt.com>",
-  "license": "MIT",
   "devDependencies": {
-    "eslint": "^3.18.0",
+    "eslint": "^5.13.0",
     "eslint-config-shellscape": "^1.0.0",
-    "webpack": "^2.3.0"
+    "unminified-webpack-plugin": "^2.0.0",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
   }
 }

@@ -1,14 +1,58 @@
-sudo: false
+sudo: required
 language: node_js
 node_js:
-  - 8
+  - '10'
 
-before_script:
-  - node --version
-  - npm --version
+env:
+  global:
+    - GITHUB_REPO: 'saksdirect/saks-site-catalyst'
+    - secure: q5IUVWTj9eQ6KaKrLQgk4P/m7pKrpMo5zXFiFY5KqGvT/3A6rzYaC9CDq9+5nCH+i0wnQwGsd4dEawsdsO7yNFhct6YKAi/3yVOj8COjLUJEBjrbdA4XKj1s8YnUobnHQzQ/aMP9I2ZgAWL0RRlUbOow43a55R4c8vDcKyQPCoWIzUui+bLw+aY7QoX+M2K+8/pOo50FxxGUnSDYmN1N1Z6JSAV5aTtUZAqPXDjkpFWtbHKXvzIvGyg/AjB5fjDJqvyonZAwEdA4lsbPIfLCTtCQsjTjHGhxNqmScAU7QeDM5OzDqhdjjMh0Aqhcftv9cedzaexyR6UrdDyNzyc0w6B3EcKma40hCz6zkB495gVqJKpMl4Sr6NX2l7BV6glnOlCZBq7F4X2mj2elz0KxCP0PsNElG2J9j1crimY/5rG+kBlqqQWJnMvHgqJMKXB3iTNefk6orTTXQFqSsC4Shet7dNbVTVsQotPJEZ7T3/jtNi95p2wiyukjE2xT0jwdGokLLVmBNbFxQ7vgfoXMSRHZL42RCBz0keVF50AWQOIFIxSXKV1Eb6fZULIs+ntJFTdkT3WD5246X54rLC1GSF4clVh85LWi+JLIYnFVRt/YFtF9KRTXGYXb0idj6rQ3UcEv/YYE7V8vPZfz9gACKvqGc5taciN+sQB0hNFAFU8=
 
-script:
-  - npm test
+notifications:
+  slack:
+    rooms:
+      - hbcdigital:o61AV1LRABWEDhwvu1UhEZyL#pendragon-dev
+    on_success: always
+    on_failure: always
+    on_pull_requests: true
 
-matrix:
-  fast_finish: true
+branches:
+  only:
+    - master
+
+stages:
+  - test
+  - name: dark
+    if: branch = master AND type = pull_request
+  - name: live
+    if: branch = master AND type != pull_request
+
+jobs:
+  include:
+    - stage: test
+      name: 'Test ➔ Lint'
+      install: travis_wait npm ci --verbose
+      script: npm run lint
+    - name: 'Test ➔ Build'
+      install: travis_wait npm ci --verbose
+      script: npm run build:dev
+
+    - stage: dark
+      name: 'Deploy ➔ Dark'
+      install: travis_wait npm ci --verbose
+      script:
+        - npm run build:dev
+        - pip install --user awscli
+        - aws s3 sync dist s3://fe-cdn-assets/tracking/saks-site-catalyst/dark --acl public-read
+    - stage: live
+      name: 'Deploy ➔ Live'
+      install: travis_wait npm ci --verbose
+      script:
+        - npm version patch
+        - npm run build:prod
+        - git commit -am \"dist release\"
+        - git push
+        - git push --tags
+        - pip install --user awscli
+        - aws s3 sync dist s3://fe-cdn-assets/tracking/saks-site-catalyst/live --acl public-read
+

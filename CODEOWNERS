@@ -1,0 +1,9 @@
+# HBC Frontend Team (Owners of all things Frontend)
+*.vue             @saksdirect/hbc-frontend
+*.js              @saksdirect/hbc-frontend
+*.mjs             @saksdirect/hbc-frontend
+*.json            @saksdirect/hbc-frontend
+*.css             @saksdirect/hbc-frontend
+*.scss            @saksdirect/hbc-frontend
+*.sass            @saksdirect/hbc-frontend
+*.html            @saksdirect/hbc-frontend
