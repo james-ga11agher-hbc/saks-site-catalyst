@@ -60,7 +60,8 @@ module.exports = function doPlugins (app) {
     pageUrlProp = app.prop50,
     productCategory = app.prop19,
     designerNameProp = app.prop14,
-    visitTimeProp = app.prop8;
+    visitTimeProp = app.prop8,
+    recommendedSRE = app.Util.getQueryParam('recommendedSRE');
 
   function merchPageName () {
     var pageName = '',
@@ -125,6 +126,10 @@ module.exports = function doPlugins (app) {
   }
   else if (app.products.indexOf('evar53') > -1) {
     findProductMethod = 'complete the look';
+    trackVar('eVar6');
+  }
+  else if (sectionRealEstate && recommendedSRE === 'true') {
+    findProductMethod = 'internal product recommendation';
     trackVar('eVar6');
   }
   else if (sectionRealEstate && sectionRealEstate !== 'non-section real estate') {
