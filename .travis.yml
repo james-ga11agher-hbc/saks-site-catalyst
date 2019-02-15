@@ -48,9 +48,10 @@ jobs:
       name: 'Deploy ➔ Live'
       install: travis_wait npm ci --verbose
       script:
-        - npm version patch
+        - git config --global user.email "travis@travis-ci.org"
+        - git config --global user.name "Travis CI"
+        - npm version patch -m "release minor version %s [skip ci]" --commit-hooks=false
         - npm run build:prod
-        - git commit -Am \"dist release\"
         - git push -u "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:$TRAVIS_BRANCH
         - git push -u "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" --tags
         - pip install --user awscli
