@@ -50,9 +50,9 @@ jobs:
       script:
         - npm version patch
         - npm run build:prod
-        - git commit -am \"dist release\"
-        - git push
-        - git push --tags
+        - git commit -Am \"dist release\"
+        - git push -u "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:$TRAVIS_BRANCH
+        - git push -u "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" --tags
         - pip install --user awscli
         - aws s3 sync dist s3://fe-cdn-assets/tracking/saks-site-catalyst/live --acl public-read
 
