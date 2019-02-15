@@ -1,6 +1,6 @@
 {
   "name": "saks-site-catalyst",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "description": "Saks Adobe Analytics - App Measurement and Plugin setup",
   "scripts": {
     "lint": "eslint .",
